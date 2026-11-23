@@ -42,12 +42,46 @@ public:
         }
     }
 
-    void Display(){
-        Film* current = Beginning;
-        while (current!= nullptr)
+    void Display()
+    {
+        Film *current = Beginning;
+        while (current != nullptr)
         {
-        
+            cout << "Film title: " << current->title << endl;
+            cout << "Film year: " << current->year << endl;
+            cout << "Film genre: " << current->genre << endl;
+
+            current = current->Successor;
         }
-        
+    }
+
+    void clearList()
+    {
+        Film *current = Beginning;
+        while (current != nullptr)
+        {
+            Film *temp = current;
+            current = current->Successor;
+            delete temp;
+        }
+        Beginning = nullptr;
+        End = nullptr;
+    }
+
+    ~FilmList()
+    {
+        clearList();
     }
 };
+
+int main()
+{
+    FilmList mylist;
+
+    mylist.add(new Film("Inception", "Sci-fi", 2010));
+    mylist.add(new Film("Intersteller", "Sci-fi", 2014));
+    mylist.add(new Film("The Dark Knight", "Action", 2008));
+
+    mylist.Display();
+    return 0;
+}
