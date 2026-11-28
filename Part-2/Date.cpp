@@ -10,7 +10,7 @@ private:
     int Year;
 
 public:
-    Date(int d, int m, int y) : Day(d), Month(m), Year(y)
+    Date(int d = 1, int m = 1, int y = 2000) : Day(d), Month(m), Year(y)
     {
     }
 
@@ -25,24 +25,37 @@ istream &operator>>(istream &in, Date &d)
     {
 
         cout << "Enter day, month, year: ";
-        in >> d.Day >> d.Month >> d.Year;
-
-        if (d.Month == 2)
+        if (!(in >> d.Day >> d.Month >> d.Year))
         {
-            maxDays = 28;
+            in.clear();
+            in.ignore(10000, '\n');
+            cout << "Invalid input! Enter numbers only.\n";
+            continue;
         }
-        else if (d.Month == 4 || d.Month == 6 || d.Month == 9 || d.Month == 11)
+
+        if (d.Month >= 1 && d.Month <= 12)
         {
-            maxDays = 30;
+
+            if (d.Month == 2)
+            {
+                maxDays = 28;
+            }
+            else if (d.Month == 4 || d.Month == 6 || d.Month == 9 || d.Month == 11)
+            {
+                maxDays = 30;
+            }
+            else
+            {
+                maxDays = 31;
+            }
         }
         else
         {
-            maxDays = 31;
+            maxDays = 0;
         }
 
     } while (d.Month < 1 || d.Month > 12 || d.Day < 1 || d.Day > maxDays || d.Year < 0);
 
-    in >> d.Day >> d.Month >> d.Year;
     return in;
 }
 
@@ -57,5 +70,9 @@ ostream &operator<<(ostream &out, const Date &d)
 
 int main()
 {
-    Date
+    Date myDate;
+    cin >> myDate;
+    cout << myDate << endl;
+
+    return 0;
 }
